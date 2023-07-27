@@ -9,6 +9,15 @@
 
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.6.23329.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.6.23329.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.6.23329.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="MudBlazor" Version="6.7.0" />
     </ItemGroup>
 
@@ -16,6 +25,13 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="PageComponents\ProgramEditComponent.razor" />
+    </ItemGroup>
+
+
+
+    <ItemGroup>
+      <Folder Include="Database\" />
+      <Folder Include="Migrations\" />
     </ItemGroup>
 
 </Project>
