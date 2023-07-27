@@ -1,0 +1,38 @@
+﻿@page "/programspage"
+@using LiftLog.Data
+
+<PageTitle>Your WorkoutPrograms</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+<button class="btn btn-primary" @onclick="LoadData">Refresh Data</button>
+
+@if(_showEdit){
+<WorkoutProgramEditComponent Visible="_showEdit"/>
+}
+@if (programs == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Program</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var program in programs)
+        {
+            <tr>
+                <td>@program.Name</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
