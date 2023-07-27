@@ -1,43 +1,40 @@
-using LiftLog.Data;
+using LiftLog.Context;
+using LiftLog.Entities;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 
 namespace LiftLog.Pages;
 
 public partial class ProgramsPage : ComponentBase
 {
-    private List<WorkoutProgram>? programs;
+    [Inject] private LiftLogContext Context { get; set; }
+    
+    private List<WorkoutProgram>? _programs;
 
-    private bool _showEdit = false;
+    private bool _showEdit;
 
     protected override async Task OnInitializedAsync()
     {
-        programs = new List<WorkoutProgram>()
-        {
-            new WorkoutProgram
-            {
-                Id = 1,
-                Name = "Arms",
-            },
-            new WorkoutProgram
-            {
-                Id = 2,
-                Name = "Legs",
-            },
-            new WorkoutProgram
-            {
-                Id = 3,
-                Name = "Chest",
-            },
-            new WorkoutProgram
-            {
-                Id = 4,
-                Name = "Back",
-            },
-
-        };
+        _programs = await Context.WorkoutPrograms.ToListAsync();
+        
     }
-    private void LoadData()
+    private async Task LoadData()
     {
+        var x = new WorkoutProgram()
+        {
+            Name = "Arms",
+            Sets = new List<Set>()
+            {
+                new Set
+                {
+                    Reps = 10,
+                    Weight = 225,
+                    Exercise = Exercise.Squat
+                },
+            }
+        };
+        Context.WorkoutPrograms.Add(x);
+        await Context.SaveChangesAsync(default);
         _showEdit = !_showEdit;
         StateHasChanged();
     }

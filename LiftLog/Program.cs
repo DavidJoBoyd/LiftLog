@@ -1,12 +1,16 @@
+using LiftLog.Context;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using LiftLog.Data;
+using LiftLog.Entities;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddDbContext<LiftLogContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LiftLog")));
 
 var app = builder.Build();
 

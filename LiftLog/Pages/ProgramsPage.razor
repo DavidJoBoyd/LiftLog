@@ -1,5 +1,5 @@
 ﻿@page "/programspage"
-@using LiftLog.Data
+@using LiftLog.Entities
 
 <PageTitle>Your WorkoutPrograms</PageTitle>
 
@@ -12,7 +12,7 @@
 @if(_showEdit){
 <WorkoutProgramEditComponent Visible="_showEdit"/>
 }
-@if (programs == null)
+@if (_programs == null)
 {
     <p>
         <em>Loading...</em>
@@ -27,7 +27,7 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var program in programs)
+        @foreach (var program in _programs)
         {
             <tr>
                 <td>@program.Name</td>
