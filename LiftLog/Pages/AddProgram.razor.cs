@@ -1,5 +1,6 @@
-using LiftLog.Context;
-using LiftLog.Entities;
+using Application.Commands;
+using Application.Models;
+using MediatR;
 using Microsoft.AspNetCore.Components;
 
 namespace LiftLog.Pages;
@@ -7,25 +8,26 @@ namespace LiftLog.Pages;
 public partial class AddProgram : ComponentBase
 {
     [Inject] private NavigationManager NavigationManager { get; set; }
-    [Inject] private LiftLogContext Context { get; set; }
+    [Inject] private IMediator Mediator { get; set; } = default!;
 
 
-    private WorkoutProgram _program = new();
+
+    private WorkoutProgramModel _program = new();
     
     private Task AddSet()
     {
-        _program.Sets.Add(new Set());
+        _program.Sets.Add(new SetModel());
         return Task.CompletedTask;
     }
 
     private async Task Save()
     {
-        Context.WorkoutPrograms.Add(_program);
-        await Context.SaveChangesAsync();
+        await Mediator.Send(new CreateProgram(_program));
         NavigationManager.NavigateTo("/programspage");
+
     }
 
-    private void Delete(Set set)
+    private void Delete(SetModel set)
     {
         _program.Sets.Remove(set);
     }

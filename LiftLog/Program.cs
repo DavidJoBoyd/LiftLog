@@ -1,4 +1,6 @@
-using LiftLog.Context;
+using Application;
+using Infrastructure.Context;
+using LiftLog;
 using LiftLog.Misc;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
@@ -12,6 +14,12 @@ builder.Services.AddDbContext<LiftLogContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LiftLog")));
 builder.Services.AddMudServices();
 
+builder.Services.AddMediatR(mediatrServiceConfiguration =>
+{
+    mediatrServiceConfiguration.RegisterServicesFromAssemblies(
+    typeof(IApplicationMarker).Assembly,
+    typeof(IWebMarker).Assembly);
+});
 builder.Services.AddScoped<AppState>();
 var app = builder.Build();
 

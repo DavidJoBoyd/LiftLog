@@ -1,7 +1,7 @@
-using LiftLog.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace LiftLog.Context;
+namespace Infrastructure.Context;
 
 public class LiftLogContext : DbContext
 {

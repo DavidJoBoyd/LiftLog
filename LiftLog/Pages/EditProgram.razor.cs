@@ -1,16 +1,12 @@
-using LiftLog.Context;
-using LiftLog.Entities;
+using Domain.Entities;
 using LiftLog.Misc;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 
 namespace LiftLog.Pages;
 
 public partial class EditProgram : ComponentBase
 {
     [Inject] private NavigationManager NavigationManager { get; set; }
-    [Inject] private LiftLogContext Context { get; set; }
-
     [Inject] AppState AppState { get; set; } = default!;
 
 
@@ -18,9 +14,9 @@ public partial class EditProgram : ComponentBase
     
     protected override Task OnInitializedAsync()
     {
-        _program = Context.WorkoutPrograms
-            .Include(x=>x.Sets)
-            .FirstOrDefault(x => x.Id == AppState.SelectedWorkoutId) ?? new WorkoutProgram();
+        // _program = Context.WorkoutPrograms
+        //     .Include(x=>x.Sets)
+        //     .FirstOrDefault(x => x.Id == AppState.SelectedWorkoutId) ?? new WorkoutProgram();
         return Task.CompletedTask;
     }
 
@@ -32,9 +28,9 @@ public partial class EditProgram : ComponentBase
 
     private async Task Save()
     {
-        Context.WorkoutPrograms.Update(_program);
-        await Context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/programspage");
+        // Context.WorkoutPrograms.Update(_program);
+        // await Context.SaveChangesAsync();
+        // NavigationManager.NavigateTo("/programspage");
     }
     
     private void Delete(Set set)
