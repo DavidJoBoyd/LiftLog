@@ -1,7 +1,7 @@
-using LiftLog.Entities;
-using LiftLog.Models;
+using Application.Models;
+using Domain.Entities;
 
-namespace LiftLog.Mappers;
+namespace Application.Mappers;
 
 public static class SetMapper
 {

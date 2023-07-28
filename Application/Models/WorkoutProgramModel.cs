@@ -1,4 +1,4 @@
-namespace LiftLog.Models;
+namespace Application.Models;
 
 public class WorkoutProgramModel
 {

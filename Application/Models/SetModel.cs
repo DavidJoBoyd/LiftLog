@@ -1,8 +1,8 @@
-using LiftLog.Entities;
+using Domain.Enums;
 
-namespace LiftLog.Models;
+namespace Application.Models;
 
-public class SetModel
+public sealed class SetModel
 {
     public int Id { get; set; }
     public int Reps { get; set; }
