@@ -1,38 +1,34 @@
 ﻿@page "/programspage"
-@using LiftLog.Entities
 
 <PageTitle>Your WorkoutPrograms</PageTitle>
 
 <h1>Programs</h1>
+<br>
 
-<p>Your Programs</p>
+<MudButton Variant="Variant.Filled" @onclick="LoadData" Color="Color.Primary">Add A Program</MudButton>
 
-<button class="btn btn-primary" @onclick="LoadData">Refresh Data</button>
+<br>
+<br>
 
-@if(_showEdit){
-<WorkoutProgramEditComponent Visible="_showEdit"/>
-}
-@if (_programs == null)
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Program</th>
-        </tr>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Program</th>
+        <th>Description</th>
+
+    </tr>
         </thead>
         <tbody>
         @foreach (var program in _programs)
         {
             <tr>
                 <td>@program.Name</td>
+                <td>@program.Description</td>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" OnClick="() => Delete(program)"/>
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => Edit(program)"/>
+
             </tr>
         }
         </tbody>
     </table>
-}
+

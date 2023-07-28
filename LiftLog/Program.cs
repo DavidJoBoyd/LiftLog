@@ -1,8 +1,7 @@
 using LiftLog.Context;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using LiftLog.Entities;
+using LiftLog.Misc;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +10,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddDbContext<LiftLogContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LiftLog")));
+builder.Services.AddMudServices();
 
+builder.Services.AddScoped<AppState>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

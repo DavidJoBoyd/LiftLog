@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiftLog", "LiftLog\LiftLog.csproj", "{4005CA92-6A04-4254-AF42-2E6048BF85BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{86F4EE78-655F-41CB-BB7D-F9A5455FFBCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{DE279E8A-9703-4002-B3AA-D1E0849339E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{4005CA92-6A04-4254-AF42-2E6048BF85BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4005CA92-6A04-4254-AF42-2E6048BF85BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4005CA92-6A04-4254-AF42-2E6048BF85BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86F4EE78-655F-41CB-BB7D-F9A5455FFBCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86F4EE78-655F-41CB-BB7D-F9A5455FFBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86F4EE78-655F-41CB-BB7D-F9A5455FFBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86F4EE78-655F-41CB-BB7D-F9A5455FFBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE279E8A-9703-4002-B3AA-D1E0849339E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE279E8A-9703-4002-B3AA-D1E0849339E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE279E8A-9703-4002-B3AA-D1E0849339E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE279E8A-9703-4002-B3AA-D1E0849339E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

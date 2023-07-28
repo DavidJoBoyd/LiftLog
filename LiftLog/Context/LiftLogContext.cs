@@ -13,6 +13,21 @@ public class LiftLogContext : DbContext
         : base(options)
     {            
     }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.Entity<Set>()
+            .HasOne(s => s.WorkoutProgram)
+            .WithMany(w => w.Sets)
+            .HasForeignKey(s => s.WorkoutProgramId);
+        
+        builder.Entity<WorkoutProgram>()
+            .HasMany(w => w.Sets)
+            .WithOne(s => s.WorkoutProgram)
+            .HasForeignKey(s => s.WorkoutProgramId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=localhost;Database=LiftLog;Trusted_Connection=True;TrustServerCertificate=True;");

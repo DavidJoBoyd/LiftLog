@@ -1,0 +1,47 @@
+@page "/addprogramspage"
+@using LiftLog.Entities
+
+<PageTitle>Program Creator</PageTitle>
+<MudGrid Style="width: 33%">
+    <MudItem xs="12" sm="9">
+        <h2>Add A Program</h2>
+    </MudItem>
+    <MudItem xs="12" sm="3">
+    <MudIconButton Icon="@Icons.Material.Filled.ArrowBack" Variant="Variant.Filled" Color="Color.Error" OnClick="Back"/>
+    </MudItem>
+</MudGrid>
+
+<div style="width:25%">
+    <MudTextField @bind-Value="_program.Name" Label="Name" Variant="Variant.Text"></MudTextField>
+    <br>
+    <MudTextField @bind-Value="_program.Description" Label="Description" Variant="Variant.Text"/>
+</div>
+
+<br>
+<br>
+<MudButton Variant="Variant.Filled" @onclick="Save" Color="Color.Primary">Save Changes</MudButton>
+
+<MudButton Variant="Variant.Filled" @onclick="AddSet" Color="Color.Primary">Add A Set</MudButton>
+
+@foreach (var set in _program.Sets)
+{
+    <MudGrid Style="width: 33%">
+        <MudItem xs="12" sm="3">
+            <MudSelect T="Exercise" Label="Exercise" @bind-Value="set.Exercise">
+                @foreach (Exercise exercise in Enum.GetValues(typeof(Exercise)))
+                {
+                    <MudSelectItem Value="@exercise">@exercise.GetDescription()</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="3">
+            <MudNumericField @bind-Value="set.Reps" Label="Reps" Variant="Variant.Text"/>
+        </MudItem>
+        <MudItem xs="12" sm="3">
+            <MudNumericField @bind-Value="set.Weight" Label="Weight" Variant="Variant.Text"/>
+        </MudItem>
+        <MudItem xs="12" sm="3">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" OnClick="() => Delete(set)"/>
+        </MudItem>
+    </MudGrid>
+}
