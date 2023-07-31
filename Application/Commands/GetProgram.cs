@@ -1,27 +1,27 @@
-using Domain.Entities;
+using Application.Mappers;
+using Application.Models;
 using Infrastructure.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-
 namespace Application.Commands;
 
-public class GetProgram
+public sealed record GetProgram(int Id) : IRequest<WorkoutProgramModel>;
+
+public class GetProgramHandler : IRequestHandler<GetProgram, WorkoutProgramModel>
 {
     private readonly LiftLogContext _context;
 
-    public GetProgram(LiftLogContext context)
+    public GetProgramHandler(LiftLogContext context)
     {
         _context = context;
     }
-
-    public async Task<WorkoutProgram> Handle(int programId)
+    
+    public async Task<WorkoutProgramModel> Handle(GetProgram request, CancellationToken cancellationToken)
     {
-        var program = await _context.WorkoutPrograms.FirstOrDefaultAsync(p => p.Id == programId);
-
-        if (program == null)
-        {
-            throw new Exception($"Program with id {programId} not found.");
-        }
-
-        return program;
+        var program = await _context.WorkoutPrograms
+            .Include(x => x.Sets)
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
+ 
+        return program?.ToModel() ?? new WorkoutProgramModel();
     }
 }

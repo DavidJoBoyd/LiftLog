@@ -9,9 +9,9 @@ namespace LiftLog.Pages;
 
 public partial class ProgramsPage : ComponentBase
 {
-    [Inject] private NavigationManager NavigationManager { get; set; }
-    
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private IMediator Mediator { get; set; } = default!;
+    
     [Inject] AppState AppState { get; set; } = default!;
 
     private List<WorkoutProgramModel> _programs = new();
@@ -26,18 +26,17 @@ public partial class ProgramsPage : ComponentBase
         NavigationManager.NavigateTo("/addprogramspage");
     }
 
-    private async Task Delete(WorkoutProgramModel program)
+    private async Task Delete(int id)
     {
-        // Context.WorkoutPrograms.Remove(program);
-        // await Context.SaveChangesAsync();
-        // _programs = await Context.WorkoutPrograms.ToListAsync();
-        // StateHasChanged();
+        await Mediator.Send(new DeleteProgram(id));
+        _programs =  await Mediator.Send(new GetAllPrograms());
+        StateHasChanged();
     }
 
-    private Task Edit(WorkoutProgramModel program)
+    private Task Edit(int id)
     {
-        // AppState.SelectedWorkoutId = program.Id;
-        // NavigationManager.NavigateTo("/editprogramspage");
+        AppState.SelectedWorkoutId = id;
+        NavigationManager.NavigateTo("/editprogramspage");
         return Task.CompletedTask;
     }
 }

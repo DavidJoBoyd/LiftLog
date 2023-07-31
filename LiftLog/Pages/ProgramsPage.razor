@@ -24,8 +24,8 @@
             <tr>
                 <td>@program.Name</td>
                 <td>@program.Description</td>
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" OnClick="() => Delete(program)"/>
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => Edit(program)"/>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" OnClick="() => Delete(program.Id)"/>
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => Edit(program.Id)"/>
 
             </tr>
         }

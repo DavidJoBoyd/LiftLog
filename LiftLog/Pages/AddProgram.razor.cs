@@ -7,7 +7,7 @@ namespace LiftLog.Pages;
 
 public partial class AddProgram : ComponentBase
 {
-    [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; } =default!;
     [Inject] private IMediator Mediator { get; set; } = default!;
 
 

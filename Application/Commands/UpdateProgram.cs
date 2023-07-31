@@ -1,31 +1,39 @@
+using Application.Mappers;
+using Application.Models;
 using Domain.Entities;
 using Infrastructure.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-
 namespace Application.Commands;
 
-public class UpdateProgram
+public sealed record UpdateProgram(WorkoutProgramModel Program) : IRequest;
+
+public class UpdateProgramHandler : IRequestHandler<UpdateProgram>
 {
     private readonly LiftLogContext _context;
 
-    public UpdateProgram(LiftLogContext context)
+    public UpdateProgramHandler(LiftLogContext context)
     {
         _context = context;
     }
-
-    public async Task Handle(WorkoutProgram updatedProgram)
+    
+    public async Task Handle(UpdateProgram request, CancellationToken cancellationToken)
     {
-        var program = await _context.WorkoutPrograms.FirstOrDefaultAsync(p => p.Id == updatedProgram.Id);
-
-        if (program == null)
+        var sets = request.Program.Sets.Where(x => x.Id == 0).ToList();
+        
+        foreach (var set in sets)
         {
-            throw new Exception($"Program with id {updatedProgram.Id} not found.");
+            var newSet = set.ToEntity();
+            _context.Sets.Add(newSet);
         }
-
-        program.Name = updatedProgram.Name;
-        program.Description = updatedProgram.Description;
-
-        _context.WorkoutPrograms.Update(program);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
+        
+        var program = await _context.WorkoutPrograms
+            .Include(x => x.Sets)
+            .FirstOrDefaultAsync(x => x.Id == request.Program.Id, cancellationToken: cancellationToken);
+        
+        if (program != null) program.Update(request.Program);
+        
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -1,39 +1,38 @@
+using Application.Commands;
+using Application.Models;
 using Domain.Entities;
 using LiftLog.Misc;
+using MediatR;
 using Microsoft.AspNetCore.Components;
 
 namespace LiftLog.Pages;
 
 public partial class EditProgram : ComponentBase
 {
-    [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; } =default!;
+    [Inject] private IMediator Mediator { get; set; } = default!;
     [Inject] AppState AppState { get; set; } = default!;
 
-
-    private WorkoutProgram _program = new();
+    private WorkoutProgramModel _program = new();
     
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        // _program = Context.WorkoutPrograms
-        //     .Include(x=>x.Sets)
-        //     .FirstOrDefault(x => x.Id == AppState.SelectedWorkoutId) ?? new WorkoutProgram();
-        return Task.CompletedTask;
+        _program = await Mediator.Send(new GetProgram(AppState.SelectedWorkoutId));
     }
 
     private Task AddSet()
     {
-        _program.Sets.Add(new Set());
+        _program.Sets.Add(new SetModel());
         return Task.CompletedTask;
     }
 
     private async Task Save()
     {
-        // Context.WorkoutPrograms.Update(_program);
-        // await Context.SaveChangesAsync();
-        // NavigationManager.NavigateTo("/programspage");
+        await Mediator.Send(new UpdateProgram(_program));
+        NavigationManager.NavigateTo("/programspage");
     }
     
-    private void Delete(Set set)
+    private void Delete(SetModel set)
     {
         _program.Sets.Remove(set);
     }

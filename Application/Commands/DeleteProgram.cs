@@ -1,27 +1,25 @@
 using Infrastructure.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-
 namespace Application.Commands;
 
-public class DeleteProgram
+public sealed record DeleteProgram(int Id) : IRequest;
+
+public class DeleteProgramHandler : IRequestHandler<DeleteProgram>
 {
     private readonly LiftLogContext _context;
 
-    public DeleteProgram(LiftLogContext context)
+    public DeleteProgramHandler(LiftLogContext context)
     {
         _context = context;
     }
-
-    public async Task Handle(int programId)
+    
+    public async Task Handle(DeleteProgram request, CancellationToken cancellationToken)
     {
-        var program = await _context.WorkoutPrograms.FirstOrDefaultAsync(p => p.Id == programId);
-
-        if (program == null)
-        {
-            throw new Exception($"Program with id {programId} not found.");
-        }
-
-        _context.WorkoutPrograms.Remove(program);
-        await _context.SaveChangesAsync();
+        var program = _context.WorkoutPrograms
+            .Include(x => x.Sets)
+            .FirstOrDefault(x => x.Id == request.Id);
+        if (program != null) _context.WorkoutPrograms.Remove(program);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }
